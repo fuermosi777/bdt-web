@@ -28,8 +28,8 @@ const App = () => {
         </ToggleButtonGroup>
       </Sidebar>
       <MainPanel>
-        {previewer == 'bottle' && <ExpBottlePreview />}
-        {previewer == 'box' && <ThreeDPreviewer />}
+        {previewer === 'bottle' && <ExpBottlePreview />}
+        {previewer === 'box' && <ThreeDPreviewer />}
       </MainPanel>
     </div>
   );
