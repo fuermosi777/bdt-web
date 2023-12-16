@@ -1,4 +1,4 @@
-import React, { ReactPropTypes } from "react";
+import React from "react";
 import "./MainPanel.scss";
 
 const MainPanel = ({ children }) => {
