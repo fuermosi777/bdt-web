@@ -14,11 +14,15 @@ import top from '../assets/top.png'
 const ThreeDPreviewer = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
 
+  // Box packing.
   useEffect(() => {
     // Create the renderer and add it to the page's body element
     var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    if (canvasRef.current) {
+      renderer.setSize(canvasRef.current.offsetWidth, canvasRef.current.offsetHeight);
+    }
 
     canvasRef.current && canvasRef.current.appendChild(renderer.domElement);
 
@@ -109,7 +113,6 @@ const ThreeDPreviewer = () => {
     controls.enableDamping = true;
     controls.dampingFactor = 0.25;
     controls.enablePan = false;
-    controls.enableZoom = false;
 
     // Animate the packaging.
     const animate = () => {

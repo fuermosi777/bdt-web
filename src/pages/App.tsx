@@ -1,10 +1,10 @@
 import React from "react";
 
-// import logo from "./logo.svg";
 import "./App.scss";
 import Sidebar from "../components/Sidebar.tsx";
 import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
 import MainPanel from "../components/MainPanel.tsx";
+import ExpBottlePreview from "../components/ExpBottlePreview.tsx";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
       <Sidebar />
       <MainPanel>
         <ThreeDPreviewer />
+        <ExpBottlePreview />
       </MainPanel>
     </div>
   );
