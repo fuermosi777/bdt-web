@@ -1,10 +1,10 @@
 import React from "react";
 import "./Sidebar.scss";
 
-function Sidebar() {
+const Sidebar = ({ children }) => {
   return (
     <div className="Sidebar">
-      <p>侧边栏（施工中👷）</p>
+      {children}
     </div>
   );
 }
