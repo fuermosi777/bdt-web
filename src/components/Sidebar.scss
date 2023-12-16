@@ -1,5 +1,7 @@
 .Sidebar {
   width: 200px;
-  height: 100%;
+  flex-basis: 200px;
+  flex-grow: 0;
+    flex-shrink: 0;
   background-color: #F7F8FA;
 }

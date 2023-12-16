@@ -4,6 +4,13 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { useRef } from "react";
 
+import cover from '../assets/cover.png'
+import back from '../assets/back.png'
+import bottom from '../assets/bottom.png'
+import left from '../assets/left.png'
+import right from '../assets/right.png'
+import top from '../assets/top.png'
+
 const ThreeDPreviewer = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
 
@@ -39,12 +46,12 @@ const ThreeDPreviewer = () => {
 
     // Load the textures.
     var textureLoader = new THREE.TextureLoader();
-    var pkgTextureCover = textureLoader.load("cover.png");
-    var pkgTextureBack = textureLoader.load("back.png");
-    var pkgTextureLeft = textureLoader.load("left.png");
-    var pkgTextureRight = textureLoader.load("right.png");
-    var pkgTextureTop = textureLoader.load("top.png");
-    var pkgTextureBottom = textureLoader.load("bottom.png");
+    var pkgTextureCover = textureLoader.load(cover);
+    var pkgTextureBack = textureLoader.load(back);
+    var pkgTextureLeft = textureLoader.load(left);
+    var pkgTextureRight = textureLoader.load(right);
+    var pkgTextureTop = textureLoader.load(top);
+    var pkgTextureBottom = textureLoader.load(bottom);
 
     // Use the linear filter for the textures to avoid blurriness
     pkgTextureCover.minFilter =

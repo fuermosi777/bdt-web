@@ -4,12 +4,15 @@ import React from "react";
 import "./App.scss";
 import Sidebar from "../components/Sidebar.tsx";
 import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
+import MainPanel from "../components/MainPanel.tsx";
 
 function App() {
   return (
     <div className="App">
-      <Sidebar/>
-      <ThreeDPreviewer/>
+      <Sidebar />
+      <MainPanel>
+        <ThreeDPreviewer />
+      </MainPanel>
     </div>
   );
 }
