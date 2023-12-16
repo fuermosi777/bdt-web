@@ -3,11 +3,9 @@ import "./HomePage.scss";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div>Home page</div>
-        <a href={`/app`}>Enter app</a>
-      </header>
+    <div className="HomePage">
+      <div>BDT 白酒定制平台</div>
+      <a href={`/app`}>开始定制</a>
     </div>
   );
 }
