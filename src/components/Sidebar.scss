@@ -7,4 +7,8 @@ $sidebar-border-color: rgba(200, 200, 200, 0.3);
   flex-shrink: 0;
   padding: 10px;
   border-right: 1px solid $sidebar-border-color;
+
+  img {
+    width: 100%;
+  }
 }

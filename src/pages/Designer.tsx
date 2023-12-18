@@ -6,6 +6,7 @@ import MainPanel from "../components/MainPanel.tsx";
 import Header from "../components/Header.tsx";
 import Content from "../components/Content.tsx";
 import Konva from "konva";
+import { packagePresets } from "../constants/presets.ts";
 
 // The entry point for the packaging designer tool.
 const Designer = () => {
@@ -28,12 +29,20 @@ const Designer = () => {
     layer.add(background);
   }, []);
 
+  const PresetThumbnail = ({ preset }) => {
+    return <div className="PresetThumbnail">
+      <img src={preset.thumbnailUrl} />
+    </div>;
+  };
+
   return (
     <div className="Designer">
       <Header />
       <Content>
         <Sidebar>
-          <p></p>
+          {packagePresets.map((preset) => (
+            <PresetThumbnail preset={preset} />
+          ))}
         </Sidebar>
         <MainPanel>
           <div
