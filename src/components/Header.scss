@@ -1,0 +1,8 @@
+$header-box-shadow: 0 2px 4px rgba(100, 100, 100, 0.1); // Delicate shadow
+
+.Header {
+  display: flex;
+  height: 44px;
+  align-items: center;
+  box-shadow: $header-box-shadow;
+}

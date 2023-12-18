@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./pages/App.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Designer from "./pages/Designer.tsx";
 
 const router = createBrowserRouter([
   {
@@ -12,8 +12,8 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "/app",
-    element: <App />,
+    path: "/designer",
+    element: <Designer />,
   },
 ]);
 

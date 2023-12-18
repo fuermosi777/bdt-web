@@ -1,8 +1,10 @@
+$sidebar-border-color: rgba(200, 200, 200, 0.3);
+
 .Sidebar {
   width: 200px;
   flex-basis: 200px;
   flex-grow: 0;
-    flex-shrink: 0;
-  background-color: #F7F8FA;
+  flex-shrink: 0;
   padding: 10px;
+  border-right: 1px solid $sidebar-border-color;
 }

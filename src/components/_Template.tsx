@@ -1,7 +1,7 @@
 import React from "react";
 import "./_Template.scss";
 
-function _Template() {
+const _Template = () => {
   return (
     <div className="_Template">
       
