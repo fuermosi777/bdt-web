@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import "./Designer.scss";
 import Sidebar from "../components/Sidebar.tsx";
@@ -12,10 +12,12 @@ import { packagePresets } from "../constants/presets.ts";
 const Designer = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
 
+  let stage: Konva.Stage | null;
+
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const stage = new Konva.Stage({
+    stage = new Konva.Stage({
       container: canvasRef.current,
       width: canvasRef.current.offsetWidth,
       height: canvasRef.current.offsetHeight,
@@ -25,14 +27,36 @@ const Designer = () => {
     const layer = new Konva.Layer();
     stage.add(layer);
 
-    const background = generateBackground(stage);
-    layer.add(background);
+    const selected = 0;
+    const preset = packagePresets[selected];
+    for (let asset of preset.assets) {
+      for (let image of asset.images) {
+        let imageObj = new Image();
+        imageObj.src = image.url;
+        imageObj.onload = () => {
+          var toAdd = new Konva.Image({
+            x: 50,
+            y: 50,
+            image: imageObj,
+            width: image.width,
+            height: image.height,
+          });
+          layer.add(toAdd);
+          // stage!.on("dragmove", () => {
+          //   toAdd.absolutePosition({ x: 0, y: 0 });
+          // });
+        };
+      }
+    }
   }, []);
 
+  // TODO: move this out of this page.
   const PresetThumbnail = ({ preset }) => {
-    return <div className="PresetThumbnail">
-      <img src={preset.thumbnailUrl} />
-    </div>;
+    return (
+      <div className="PresetThumbnail">
+        <img src={preset.thumbnailUrl} />
+      </div>
+    );
   };
 
   return (
@@ -48,32 +72,11 @@ const Designer = () => {
           <div
             className="canvas"
             ref={canvasRef}
-            style={{
-              width: 800,
-              height: 600,
-            }}
           ></div>
         </MainPanel>
       </Content>
     </div>
   );
 };
-
-// Generate a Konva.Rect of background so that it can be added to the layer/stage.
-function generateBackground(stage: Konva.Stage): Konva.Rect {
-  const background = new Konva.Rect({
-    x: 0,
-    y: 0,
-    width: stage.width(),
-    height: stage.height(),
-    fill: "#FFFFFF",
-    listening: false,
-  });
-  stage.on("dragmove", () => {
-    background.absolutePosition({ x: 0, y: 0 });
-  });
-
-  return background;
-}
 
 export default Designer;
