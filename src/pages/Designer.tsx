@@ -35,19 +35,22 @@ const Designer = () => {
         imageObj.src = image.url;
         imageObj.onload = () => {
           var toAdd = new Konva.Image({
-            x: 50,
-            y: 50,
+            x: image.x,
+            y: image.y,
             image: imageObj,
             width: image.width,
             height: image.height,
+            draggable: false
           });
           layer.add(toAdd);
           // stage!.on("dragmove", () => {
-          //   toAdd.absolutePosition({ x: 0, y: 0 });
+          //   toAdd.absolutePosition({ x: image.x, y: image.y });
           // });
         };
       }
     }
+
+    stage.scale({x: 0.4, y: 0.4})
   }, []);
 
   // TODO: move this out of this page.

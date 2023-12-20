@@ -1,7 +1,9 @@
 interface PackageImage {
   url: string,
   width: number,
-  height: number
+  height: number,
+  x: number,
+  y: number
 }
 
 interface PackageAsset {
