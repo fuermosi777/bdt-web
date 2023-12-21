@@ -7,10 +7,14 @@ import Header from "../components/Header.tsx";
 import Content from "../components/Content.tsx";
 import Konva from "konva";
 import { packagePresets } from "../constants/presets.ts";
+import { PackageShapeType } from "../interfaces/PackagePreset.ts";
+import { Button } from "@mui/joy";
+import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
 
 // The entry point for the packaging designer tool.
 const Designer = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
+  const [imageData, setImageData] = useState<ThreeDPreviewer.ImageData>();
 
   let stage: Konva.Stage | null;
 
@@ -21,7 +25,7 @@ const Designer = () => {
       container: canvasRef.current,
       width: canvasRef.current.offsetWidth,
       height: canvasRef.current.offsetHeight,
-      draggable: true,
+      draggable: false,
     });
 
     const layer = new Konva.Layer();
@@ -29,28 +33,51 @@ const Designer = () => {
 
     const selected = 0;
     const preset = packagePresets[selected];
+
     for (let asset of preset.assets) {
-      for (let image of asset.images) {
-        let imageObj = new Image();
-        imageObj.src = image.url;
-        imageObj.onload = () => {
-          var toAdd = new Konva.Image({
-            x: image.x,
-            y: image.y,
-            image: imageObj,
-            width: image.width,
-            height: image.height,
-            draggable: false
-          });
-          layer.add(toAdd);
-          // stage!.on("dragmove", () => {
-          //   toAdd.absolutePosition({ x: image.x, y: image.y });
-          // });
-        };
+      for (let group of asset.groups) {
+        const groupToAdd = new Konva.Group({
+          x: group.x,
+          y: group.y,
+          draggable: false,
+        });
+        groupToAdd.absolutePosition({ x: group.x, y: group.y });
+        layer.add(groupToAdd);
+
+        for (let shape of group.shapes) {
+          if (shape.type === PackageShapeType.Image) {
+            let image = new Image();
+            image.src = shape.url || "";
+            var imageToAdd = new Konva.Image({
+              x: shape.x,
+              y: shape.y,
+              image: image,
+              width: shape.width,
+              height: shape.height,
+              rotation: shape.rotation || 0,
+              offsetX: shape.offsetX || 0,
+              offsetY: shape.offsetY || 0,
+              draggable: shape.draggable,
+            });
+
+            groupToAdd.add(imageToAdd);
+          } else if (shape.type == PackageShapeType.Text) {
+            var text = new Konva.Text({
+              x: shape.x,
+              y: shape.y,
+              text: shape.text,
+              fontSize: shape.fontSize,
+              fontFamily: shape.fontFamily,
+              fill: shape.fill,
+              draggable: shape.draggable,
+            });
+            groupToAdd.add(text);
+          }
+        }
       }
     }
 
-    stage.scale({x: 0.4, y: 0.4})
+    stage.scale({ x: 0.4, y: 0.4 });
   }, []);
 
   // TODO: move this out of this page.
@@ -68,14 +95,33 @@ const Designer = () => {
       <Content>
         <Sidebar>
           {packagePresets.map((preset) => (
-            <PresetThumbnail preset={preset} />
+            <PresetThumbnail key={preset.id} preset={preset} />
           ))}
+          <Button
+            onClick={() => {
+              if (!stage) return;
+              const groups = stage.find((node) => {
+                return node.getType() === "Group";
+              });
+              setImageData({
+                top: groups[0].toDataURL(),
+                left: groups[1].toDataURL(),
+                cover: groups[2].toDataURL(),
+                right: groups[3].toDataURL(),
+                back: groups[4].toDataURL(),
+                bottom: groups[5].toDataURL(),
+              })
+            }}
+          >
+            预览3D
+          </Button>
         </Sidebar>
         <MainPanel>
-          <div
-            className="canvas"
-            ref={canvasRef}
-          ></div>
+          {imageData ? (
+            <ThreeDPreviewer imageData={imageData} />
+          ) : (
+            <div className="canvas" ref={canvasRef}></div>
+          )}
         </MainPanel>
       </Content>
     </div>

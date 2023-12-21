@@ -4,14 +4,19 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { useRef } from "react";
 
-import cover from '../assets/cover.png'
-import back from '../assets/back.png'
-import bottom from '../assets/bottom.png'
-import left from '../assets/left.png'
-import right from '../assets/right.png'
-import top from '../assets/top.png'
+namespace ThreeDPreviewer {
+  export interface ImageData {
+    top: string,
+    cover: string,
+    back: string,
+    left: string,
+    right: string,
+    bottom: string
+  } 
+}
 
-const ThreeDPreviewer = () => {
+const ThreeDPreviewer = (props: {imageData: ThreeDPreviewer.ImageData}) => {
+  const { imageData } = props;
   const canvasRef = useRef<HTMLDivElement>(null);
 
   // Box packing.
@@ -21,7 +26,10 @@ const ThreeDPreviewer = () => {
     renderer.setPixelRatio(window.devicePixelRatio);
 
     if (canvasRef.current) {
-      renderer.setSize(canvasRef.current.offsetWidth, canvasRef.current.offsetHeight);
+      renderer.setSize(
+        canvasRef.current.offsetWidth,
+        canvasRef.current.offsetHeight
+      );
     }
 
     canvasRef.current && canvasRef.current.appendChild(renderer.domElement);
@@ -50,12 +58,12 @@ const ThreeDPreviewer = () => {
 
     // Load the textures.
     var textureLoader = new THREE.TextureLoader();
-    var pkgTextureCover = textureLoader.load(cover);
-    var pkgTextureBack = textureLoader.load(back);
-    var pkgTextureLeft = textureLoader.load(left);
-    var pkgTextureRight = textureLoader.load(right);
-    var pkgTextureTop = textureLoader.load(top);
-    var pkgTextureBottom = textureLoader.load(bottom);
+    var pkgTextureCover = textureLoader.load(imageData.cover);
+    var pkgTextureBack = textureLoader.load(imageData.back);
+    var pkgTextureLeft = textureLoader.load(imageData.left);
+    var pkgTextureRight = textureLoader.load(imageData.right);
+    var pkgTextureTop = textureLoader.load(imageData.top);
+    var pkgTextureBottom = textureLoader.load(imageData.bottom);
 
     // Use the linear filter for the textures to avoid blurriness
     pkgTextureCover.minFilter =
@@ -124,7 +132,7 @@ const ThreeDPreviewer = () => {
 
       // Keep the animation going
       requestAnimationFrame(animate);
-    }
+    };
     animate();
   }, []);
 
