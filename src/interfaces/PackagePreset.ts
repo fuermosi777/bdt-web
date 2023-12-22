@@ -30,6 +30,8 @@ interface PackageShape {
 interface PackageGroup {
   x: number;
   y: number;
+  width: number;
+  height: number;
   shapes: PackageShape[];
 }
 
@@ -46,4 +48,4 @@ interface PackagePreset {
   assets: PackageAsset[];
 }
 
-export { PackageType, PackageShapeType, PackagePreset };
+export { PackageType, PackageShape, PackageShapeType, PackagePreset };

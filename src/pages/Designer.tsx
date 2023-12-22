@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "./Designer.scss";
 import Sidebar from "../components/Sidebar.tsx";
@@ -39,6 +39,8 @@ const Designer = () => {
         const groupToAdd = new Konva.Group({
           x: group.x,
           y: group.y,
+          width: group.width,
+          height: group.height,
           draggable: false,
         });
         groupToAdd.absolutePosition({ x: group.x, y: group.y });
@@ -110,7 +112,7 @@ const Designer = () => {
                 right: groups[3].toDataURL(),
                 back: groups[4].toDataURL(),
                 bottom: groups[5].toDataURL(),
-              })
+              });
             }}
           >
             预览3D

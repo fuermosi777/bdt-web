@@ -111,7 +111,7 @@ const ThreeDPreviewer = (props: {imageData: ThreeDPreviewer.ImageData}) => {
 
     // Create the book and add it to the scene
     var packaging = new THREE.Mesh(
-      new THREE.BoxGeometry(3, 7, 3, 4, 4, 1),
+      new THREE.BoxGeometry(4.4, 11.38, 4.4, 4, 4, 1),
       materials
     );
     scene.add(packaging);
