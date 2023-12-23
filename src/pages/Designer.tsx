@@ -25,6 +25,9 @@ const AssetTile = (props: { asset: PackageAsset }) => {
   );
 };
 
+// TODO: use router to handle presets selection and assets. Use store to handle UI status such as editor/previewer.
+// TODO: presist changes to the editor.
+
 // The entry point for the packaging designer tool.
 const Designer = () => {
   const menuItemType = useDesignerStore((s) => s.menuItemType);
