@@ -1,5 +1,5 @@
 enum Literal {
-  Title = "BDT 白酒定制平台",
+  Title = "BDT",
   HomePage = "首页",
   StartNewDesign = "开始一个新的设计",
   Package = '包装',
