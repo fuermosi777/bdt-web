@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./Designer.scss";
 import Sidebar from "../components/Sidebar.tsx";
@@ -12,51 +12,19 @@ import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
 import PackageEditor from "../components/PackageEditor.tsx";
 import { useDesignerStore } from "../stores/DesignerStore.ts";
 
-
 // The entry point for the packaging designer tool.
 const Designer = () => {
   const [imageData, setImageData] = useState<ThreeDPreviewer.ImageData>();
-  const [editingAsset, setEditingAsset] = useState<PackageAsset>();
-  // const test = useDesignerStore(s => s.test);
-
-  // TODO: move this out of this page.
-  const PresetThumbnail = ({ preset }) => {
-    return (
-      <div className="PresetThumbnail">
-        <img src={preset.thumbnailUrl} />
-      </div>
-    );
-  };
+  const asset = useDesignerStore((s) => s.asset);
 
   return (
     <div className="Designer">
       <Header />
       <Content>
         <Sidebar />
-          {/* {packagePresets.map((preset) => (
-            <PresetThumbnail key={preset.id} preset={preset} />
-          ))} */}
-          {/* <Button
-            onClick={() => {
-              if (!stage) return;
-              const groups = stage.find((node) => {
-                return node.getType() === "Group";
-              });
-              setImageData({
-                top: groups[0].toDataURL(),
-                left: groups[1].toDataURL(),
-                cover: groups[2].toDataURL(),
-                right: groups[3].toDataURL(),
-                back: groups[4].toDataURL(),
-                bottom: groups[5].toDataURL(),
-              });
-            }}
-          >
-            预览3D
-          </Button> */}
         <MainPanel>
-          {editingAsset && <PackageEditor asset={editingAsset}/>}
-          
+          {asset && <PackageEditor asset={asset} />}
+
           {/* {imageData ? (
             <ThreeDPreviewer imageData={imageData} />
           ) : (

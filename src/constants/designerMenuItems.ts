@@ -2,11 +2,11 @@ import { Aperture, Box, Icon, Image, Tool, Type } from "react-feather";
 import { Literal } from "./literals.ts";
 
 enum DesignerMenuItemType {
-  package,
-  templates,
-  materials,
-  text,
-  tools,
+  Package,
+  Templates,
+  Materials,
+  Text,
+  Tools,
 }
 
 interface DesignerMenuItem {
@@ -17,27 +17,27 @@ interface DesignerMenuItem {
 
 const designerMenuItems: DesignerMenuItem[] = [
   {
-    type: DesignerMenuItemType.package,
+    type: DesignerMenuItemType.Package,
     label: Literal.Package,
     icon: Box
   },
   {
-    type: DesignerMenuItemType.templates,
+    type: DesignerMenuItemType.Templates,
     label: Literal.Templates,
     icon: Aperture
   },
   {
-    type: DesignerMenuItemType.materials,
+    type: DesignerMenuItemType.Materials,
     label: Literal.Materials,
     icon: Image
   },
   {
-    type: DesignerMenuItemType.text,
+    type: DesignerMenuItemType.Text,
     label: Literal.Text,
     icon: Type
   },
   {
-    type: DesignerMenuItemType.tools,
+    type: DesignerMenuItemType.Tools,
     label: Literal.Tools,
     icon: Tool
   },

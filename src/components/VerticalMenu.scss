@@ -1,5 +1,9 @@
 .VerticalMenu {
   width: 60px;
+  flex-basis: 60px;
+  flex-grow: 0;
+  flex-shrink: 0;
+
   height: 100%;
   border-right: 1px solid rgba(200, 200, 200, 0.3);
 

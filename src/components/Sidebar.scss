@@ -5,9 +5,15 @@ $sidebar-border-color: rgba(200, 200, 200, 0.3);
   flex-basis: 250px;
   flex-grow: 0;
   flex-shrink: 0;
+  display: flex;
   border-right: 1px solid $sidebar-border-color;
 
   img {
     width: 100%;
+  }
+
+  .secondary-container {
+    flex: 1 0 auto;
+    padding: 10px;
   }
 }
