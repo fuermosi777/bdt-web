@@ -2,8 +2,13 @@ import React from "react";
 
 import { Box, Button, IconButton, Stack } from "@mui/joy";
 import { Package } from "react-feather";
+import { Literal } from "../constants/literals.ts";
+import { useDesignerStore } from "../stores/DesignerStore.ts";
 
 const Header = () => {
+  const display = useDesignerStore((s) => s.display);
+  const setDisplay = useDesignerStore((s) => s.setDisplay);
+
   return (
     <Box
       className="Header"
@@ -34,24 +39,26 @@ const Header = () => {
           <Package />
         </IconButton>
         <Button
-          variant="plain"
+          variant={display === "editor" ? "soft" : "plain"}
           color="neutral"
           component="a"
           // href="/joy-ui/getting-started/templates/email/"
+          onClick={() => setDisplay('editor')}
           size="sm"
           sx={{ alignSelf: "center" }}
         >
-          编辑
+          {Literal.Editor}
         </Button>
         <Button
-          variant="plain"
+          variant={display === "previewer" ? "soft" : "plain"}
           color="neutral"
           component="a"
+          onClick={() => setDisplay('previewer')}
           // href="/joy-ui/getting-started/templates/email/"
           size="sm"
           sx={{ alignSelf: "center" }}
         >
-          3D预览
+          {Literal.Previewer}
         </Button>
       </Stack>
     </Box>

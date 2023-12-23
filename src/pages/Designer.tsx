@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Header from "../components/Header.tsx";
 import { packagePresets } from "../constants/presets.ts";
-import {
-  PackageAsset,
-  PackageShapeType,
-  PackageType,
-} from "../interfaces/PackagePreset.ts";
-import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
+import { PackageAsset, PackageType } from "../interfaces/PackagePreset.ts";
 import PackageEditor from "../components/PackageEditor.tsx";
 import { useDesignerStore } from "../stores/DesignerStore.ts";
 import DesignerLayout from "../components/DesignerLayout.tsx";
 import SideNav from "../components/SideNav.tsx";
 import { DesignerMenuItemType } from "../constants/designerMenuItems.ts";
 import { Card } from "@mui/joy";
+import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
 
 const AssetTile = (props: { asset: PackageAsset }) => {
   const setAsset = useDesignerStore((s) => s.setAsset);
@@ -31,9 +27,11 @@ const AssetTile = (props: { asset: PackageAsset }) => {
 
 // The entry point for the packaging designer tool.
 const Designer = () => {
-  const [imageData, setImageData] = useState<ThreeDPreviewer.ImageData>();
   const menuItemType = useDesignerStore((s) => s.menuItemType);
   const asset = useDesignerStore((s) => s.asset);
+  const display = useDesignerStore((s) => s.display);
+  const imageData = useDesignerStore((s) => s.imageData);
+  const setImageData = useDesignerStore((s) => s.setImageData);
 
   return (
     <DesignerLayout.Root>
@@ -50,7 +48,10 @@ const Designer = () => {
           })}
       </DesignerLayout.SidePane>
       <DesignerLayout.Main>
-        {asset && <PackageEditor asset={asset} />}
+        {display === "editor" && asset && <PackageEditor asset={asset} onEdited={setImageData} />}
+        {display === "previewer" && imageData && (
+          <ThreeDPreviewer imageData={imageData} />
+        )}
       </DesignerLayout.Main>
     </DesignerLayout.Root>
   );

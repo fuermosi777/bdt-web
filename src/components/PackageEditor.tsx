@@ -2,11 +2,29 @@ import React, { useEffect, useRef } from "react";
 import { PackageAsset, PackageShapeType } from "../interfaces/PackagePreset.ts";
 import "./PackageEditor.scss";
 import Konva from "konva";
+import ThreeDPreviewer from "./ThreeDPreviewer.tsx";
 
-const PackageEditor = (props: { asset: PackageAsset }) => {
+const PackageEditor = (props: {
+  asset: PackageAsset;
+  onEdited: (imageData: ThreeDPreviewer.ImageData) => void;
+}) => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const { asset } = props;
   let stage: Konva.Stage | null;
+
+  function saveData() {
+    if (!stage) return;
+    // TODO: make this less curated.
+    let imageData: ThreeDPreviewer.ImageData = {
+      top: stage.find("Group")[0].toDataURL(),
+      cover: stage.find("Group")[1].toDataURL(),
+      back: stage.find("Group")[2].toDataURL(),
+      left: stage.find("Group")[3].toDataURL(),
+      right: stage.find("Group")[4].toDataURL(),
+      bottom: stage.find("Group")[5].toDataURL(),
+    };
+    props.onEdited(imageData)
+  }
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -22,6 +40,8 @@ const PackageEditor = (props: { asset: PackageAsset }) => {
     stage.add(layer);
 
     stage.scale({ x: 0.4, y: 0.4 });
+
+    stage.on("dragend", saveData);
 
     for (let group of asset.groups) {
       const groupToAdd = new Konva.Group({
@@ -65,14 +85,13 @@ const PackageEditor = (props: { asset: PackageAsset }) => {
         }
       }
     }
-
-  }, [])
+  }, []);
 
   return (
     <div className="PackageEditor">
       <div className="canvas" ref={canvasRef}></div>
     </div>
   );
-}
+};
 
 export default PackageEditor;

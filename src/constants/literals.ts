@@ -6,7 +6,9 @@ enum Literal {
   Templates = '模板',
   Text = '文字',
   Materials = '素材',
-  Tools = '工具'
+  Tools = '工具',
+  Editor = '编辑器',
+  Previewer = '3D预览'
 }
 
 
