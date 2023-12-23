@@ -38,6 +38,8 @@ interface PackageGroup {
 interface PackageAsset {
   type: PackageType;
   groups: PackageGroup[];
+  width: number;
+  height: number;
 }
 
 // Interface for packaging.
@@ -48,4 +50,4 @@ interface PackagePreset {
   assets: PackageAsset[];
 }
 
-export { PackageType, PackageShape, PackageShapeType, PackagePreset };
+export { PackageType, PackageShape, PackageShapeType, PackagePreset, PackageAsset };

@@ -130,6 +130,8 @@ const packagePresets: PackagePreset[] = [
     assets: [
       {
         type: PackageType.Box,
+        width: 1760,
+        height: 1578,
         groups: [
           // Top side.
           {
