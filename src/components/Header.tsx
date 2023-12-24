@@ -8,6 +8,8 @@ import { useDesignerStore } from "../stores/DesignerStore.ts";
 const Header = () => {
   const display = useDesignerStore((s) => s.display);
   const setDisplay = useDesignerStore((s) => s.setDisplay);
+  const asset = useDesignerStore((s) => s.asset);
+  const imageData = useDesignerStore((s) => s.imageData);
 
   return (
     <Box
@@ -51,6 +53,7 @@ const Header = () => {
         </Button>
         <Button
           variant={display === "previewer" ? "soft" : "plain"}
+          disabled={!imageData}
           color="neutral"
           component="a"
           onClick={() => setDisplay('previewer')}

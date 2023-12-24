@@ -16,14 +16,14 @@ const PackageEditor = (props: {
     if (!stage) return;
     // TODO: make this less curated.
     let imageData: ThreeDPreviewer.ImageData = {
-      top: stage.find("Group")[0].toDataURL(),
-      cover: stage.find("Group")[1].toDataURL(),
-      back: stage.find("Group")[2].toDataURL(),
-      left: stage.find("Group")[3].toDataURL(),
-      right: stage.find("Group")[4].toDataURL(),
-      bottom: stage.find("Group")[5].toDataURL(),
+      top: stage.find("Group")[0].toDataURL({ pixelRatio: 2 }),
+      cover: stage.find("Group")[1].toDataURL({ pixelRatio: 2 }),
+      back: stage.find("Group")[2].toDataURL({ pixelRatio: 2 }),
+      left: stage.find("Group")[3].toDataURL({ pixelRatio: 2 }),
+      right: stage.find("Group")[4].toDataURL({ pixelRatio: 2 }),
+      bottom: stage.find("Group")[5].toDataURL({ pixelRatio: 2 }),
     };
-    props.onEdited(imageData)
+    props.onEdited(imageData);
   }
 
   useEffect(() => {

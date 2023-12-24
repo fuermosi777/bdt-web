@@ -12,34 +12,40 @@ enum DesignerMenuItemType {
 interface DesignerMenuItem {
   type: DesignerMenuItemType;
   label: string;
-  icon: Icon
+  icon: Icon;
+  disabled: boolean;
 }
 
 const designerMenuItems: DesignerMenuItem[] = [
   {
     type: DesignerMenuItemType.Package,
     label: Literal.Package,
-    icon: Box
+    icon: Box,
+    disabled: false,
   },
   {
     type: DesignerMenuItemType.Templates,
     label: Literal.Templates,
-    icon: Aperture
+    icon: Aperture,
+    disabled: true,
   },
   {
     type: DesignerMenuItemType.Materials,
     label: Literal.Materials,
-    icon: Image
+    icon: Image,
+    disabled: true,
   },
   {
     type: DesignerMenuItemType.Text,
     label: Literal.Text,
-    icon: Type
+    icon: Type,
+    disabled: true,
   },
   {
     type: DesignerMenuItemType.Tools,
     label: Literal.Tools,
-    icon: Tool
+    icon: Tool,
+    disabled: true,
   },
 ];
 

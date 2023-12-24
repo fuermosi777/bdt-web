@@ -16,6 +16,7 @@ const SideNav = () => {
           <ListItemButton
             orientation="vertical"
             variant="plain"
+            disabled={item.disabled}
             onClick={() => setMenuItemType(item.type)}
             selected={menuItemType === item.type}
           >

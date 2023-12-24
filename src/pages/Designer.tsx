@@ -8,20 +8,19 @@ import { useDesignerStore } from "../stores/DesignerStore.ts";
 import DesignerLayout from "../components/DesignerLayout.tsx";
 import SideNav from "../components/SideNav.tsx";
 import { DesignerMenuItemType } from "../constants/designerMenuItems.ts";
-import { Card } from "@mui/joy";
+import { Button } from "@mui/joy";
 import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
+import { ShoppingBag } from "react-feather";
 
 const AssetTile = (props: { asset: PackageAsset }) => {
   const setAsset = useDesignerStore((s) => s.setAsset);
-  // TODO: move these to a util func or constant.
-  let label: string = "其他";
-  if (props.asset.type === PackageType.Box) {
-    label = "外包装盒";
-  }
   return (
-    <Card size="lg" onClick={() => setAsset(props.asset)}>
-      {label}
-    </Card>
+    <Button
+      startDecorator={<ShoppingBag />}
+      onClick={() => setAsset(props.asset)}
+    >
+      {PackageType.label(props.asset.type)}
+    </Button>
   );
 };
 
@@ -51,7 +50,9 @@ const Designer = () => {
           })}
       </DesignerLayout.SidePane>
       <DesignerLayout.Main>
-        {display === "editor" && asset && <PackageEditor asset={asset} onEdited={setImageData} />}
+        {display === "editor" && asset && (
+          <PackageEditor asset={asset} onEdited={setImageData} />
+        )}
         {display === "previewer" && imageData && (
           <ThreeDPreviewer imageData={imageData} />
         )}

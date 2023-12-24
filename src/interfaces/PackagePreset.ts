@@ -4,9 +4,24 @@ enum PackageType {
   LayeredBottle = "LayeredBottle",
 }
 
+namespace PackageType {
+  export function label(type: PackageType) {
+    switch (type) {
+      case PackageType.Box:
+        return "外包装盒";
+      case PackageType.PlainBottle:
+        return "简单瓶";
+      case PackageType.LayeredBottle:
+        return "多层烤制瓶";
+      default:
+        return "其他";
+    }
+  }
+}
+
 enum PackageShapeType {
   Image = "Image",
-  Text = "Text"
+  Text = "Text",
 }
 
 interface PackageShape {
@@ -50,4 +65,10 @@ interface PackagePreset {
   assets: PackageAsset[];
 }
 
-export { PackageType, PackageShape, PackageShapeType, PackagePreset, PackageAsset };
+export {
+  PackageType,
+  PackageShape,
+  PackageShapeType,
+  PackagePreset,
+  PackageAsset,
+};
