@@ -50,8 +50,12 @@ const Designer = () => {
           })}
       </DesignerLayout.SidePane>
       <DesignerLayout.Main>
-        {display === "editor" && asset && (
-          <PackageEditor asset={asset} onEdited={setImageData} />
+        {asset && (
+          <PackageEditor
+            asset={asset}
+            onEdited={setImageData}
+            hidden={display !== "editor"}
+          />
         )}
         {display === "previewer" && imageData && (
           <ThreeDPreviewer imageData={imageData} />

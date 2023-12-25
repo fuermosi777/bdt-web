@@ -7,6 +7,7 @@ import ThreeDPreviewer from "./ThreeDPreviewer.tsx";
 const PackageEditor = (props: {
   asset: PackageAsset;
   onEdited: (imageData: ThreeDPreviewer.ImageData) => void;
+  hidden: boolean
 }) => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const { asset } = props;
@@ -88,7 +89,7 @@ const PackageEditor = (props: {
   }, []);
 
   return (
-    <div className="PackageEditor">
+    <div className={"PackageEditor " + (props.hidden ? "hidden" : "")}>
       <div className="canvas" ref={canvasRef}></div>
     </div>
   );
