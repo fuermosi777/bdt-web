@@ -91,7 +91,7 @@ const PackageEditor = (props: {
     let transformer = new Konva.Transformer();
     layer.add(transformer);
 
-    stage.on('mousedown touchstart', (e) => {
+    stage.on("mousedown touchstart", (e) => {
       // do nothing if we mousedown on any shape
       if (e.target !== stage) {
         return;
@@ -99,9 +99,10 @@ const PackageEditor = (props: {
       e.evt.preventDefault();
     });
 
+    stage.on("mouseup touchend", saveData);
 
     // clicks should select/deselect shapes
-    stage.on('click tap', function (e) {
+    stage.on("click tap", function (e) {
       // if click on empty area - remove all selections
       if (e.target === stage) {
         transformer.nodes([]);
