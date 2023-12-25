@@ -109,6 +109,11 @@ const PackageEditor = (props: {
         return;
       }
 
+      // Click on background undraggable image clear removes all selections.
+      if (!e.target.draggable()) {
+        transformer.nodes([]);
+        return;
+      }
       // do nothing if clicked NOT on our rectangles
       // if (!e.target.hasName('rect')) {
       //   return;
