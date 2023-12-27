@@ -93,7 +93,7 @@ const text2: PackageShape = {
   fill: "blue",
   x: 30,
   y: 1050,
-  width: 440,
+  width: 400,
   draggable: true,
 };
 
