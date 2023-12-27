@@ -45,6 +45,7 @@ const sampleChar1: PackageShape = {
   fill: "blue",
   x: 80,
   y: 80,
+  width: 100,
   draggable: true,
 };
 
@@ -56,17 +57,19 @@ const sampleChar2: PackageShape = {
   fill: "blue",
   x: 280,
   y: 280,
+  width: 100,
   draggable: true,
 };
 
 const slogan: PackageShape = {
   type: PackageShapeType.Text,
-  text: "企\n业\n宣\n传\n语",
+  text: "企业宣传语",
   fontFamily: "Menlo",
   fontSize: 50,
   fill: "blue",
   x: 200,
   y: 580,
+  width: 50,
   draggable: true,
 };
 
@@ -78,6 +81,7 @@ const text1: PackageShape = {
   fill: "blue",
   x: 120,
   y: 880,
+  width: 200,
   draggable: true,
 };
 
@@ -89,6 +93,7 @@ const text2: PackageShape = {
   fill: "blue",
   x: 30,
   y: 1050,
+  width: 440,
   draggable: true,
 };
 

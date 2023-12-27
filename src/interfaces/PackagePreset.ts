@@ -28,6 +28,8 @@ interface PackageShape {
   type: PackageShapeType;
   x: number;
   y: number;
+  width: number;
+  height?: number;
   draggable: boolean;
 
   url?: string;
@@ -35,8 +37,6 @@ interface PackageShape {
   fontSize?: number;
   fontFamily?: string;
   fill?: string;
-  width?: number;
-  height?: number;
   rotation?: number;
   offsetX?: number;
   offsetY?: number;

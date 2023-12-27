@@ -59,7 +59,8 @@ const PackageEditor = (props: {
         if (shape.type === PackageShapeType.Image) {
           let image = new Image();
           image.src = shape.url || "";
-          var imageToAdd = new Konva.Image({
+          let imageToAdd = new Konva.Image({
+            name: "image",
             x: shape.x,
             y: shape.y,
             image: image,
@@ -73,14 +74,23 @@ const PackageEditor = (props: {
 
           groupToAdd.add(imageToAdd);
         } else if (shape.type == PackageShapeType.Text) {
-          var text = new Konva.Text({
+          let text = new Konva.Text({
+            name: "text",
             x: shape.x,
             y: shape.y,
             text: shape.text,
+            width: shape.width,
             fontSize: shape.fontSize,
             fontFamily: shape.fontFamily,
             fill: shape.fill,
             draggable: shape.draggable,
+          });
+          text.on("transform", () => {
+            // reset scale, so only with is changing by transformer
+            text.setAttrs({
+              width: text.width() * text.scaleX(),
+              scaleX: 1,
+            });
           });
           groupToAdd.add(text);
         }
@@ -88,8 +98,18 @@ const PackageEditor = (props: {
     }
 
     // Add transformer in the end so that it is always on top.
-    let transformer = new Konva.Transformer();
-    layer.add(transformer);
+    let imageTransformer = new Konva.Transformer();
+    layer.add(imageTransformer);
+
+    let textTransformer = new Konva.Transformer({
+      enabledAnchors: ["middle-left", "middle-right"],
+      // set minimum width of text
+      boundBoxFunc: function (oldBox, newBox) {
+        newBox.width = Math.max(50, newBox.width);
+        return newBox;
+      },
+    });
+    layer.add(textTransformer);
 
     stage.on("mousedown touchstart", (e) => {
       // do nothing if we mousedown on any shape
@@ -105,39 +125,45 @@ const PackageEditor = (props: {
     stage.on("click tap", function (e) {
       // if click on empty area - remove all selections
       if (e.target === stage) {
-        transformer.nodes([]);
+        imageTransformer.nodes([]);
+        textTransformer.nodes([]);
         return;
       }
 
       // Click on background undraggable image clear removes all selections.
       if (!e.target.draggable()) {
-        transformer.nodes([]);
+        imageTransformer.nodes([]);
+        textTransformer.nodes([]);
         return;
       }
-      // do nothing if clicked NOT on our rectangles
-      // if (!e.target.hasName('rect')) {
-      //   return;
-      // }
 
       // do we pressed shift or ctrl?
       const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-      const isSelected = transformer.nodes().indexOf(e.target) >= 0;
+      const isSelected = imageTransformer.nodes().indexOf(e.target) >= 0;
 
-      if (!metaPressed && !isSelected) {
-        // if no key pressed and the node is not selected
-        // select just one
-        transformer.nodes([e.target]);
-      } else if (metaPressed && isSelected) {
-        // if we pressed keys and node was selected
-        // we need to remove it from selection:
-        const nodes = transformer.nodes().slice(); // use slice to have new copy of array
-        // remove node from array
-        nodes.splice(nodes.indexOf(e.target), 1);
-        transformer.nodes(nodes);
-      } else if (metaPressed && !isSelected) {
-        // add the node into selection
-        const nodes = transformer.nodes().concat([e.target]);
-        transformer.nodes(nodes);
+      if (e.target.hasName("image")) {
+        if (!metaPressed && !isSelected) {
+          // if no key pressed and the node is not selected
+          // select just one.
+          imageTransformer.nodes([e.target]);
+        } else if (metaPressed && isSelected) {
+          // if we pressed keys and node was selected
+          // we need to remove it from selection:
+          const nodes = imageTransformer.nodes().slice(); // use slice to have new copy of array
+          // remove node from array
+          nodes.splice(nodes.indexOf(e.target), 1);
+          imageTransformer.nodes(nodes);
+        } else if (metaPressed && !isSelected) {
+          // add the node into selection
+          const nodes = imageTransformer.nodes().concat([e.target]);
+          imageTransformer.nodes(nodes);
+        }
+      } else if (e.target.hasName("text")) {
+        if (!metaPressed && !isSelected) {
+          // if no key pressed and the node is not selected
+          // select just one.
+          textTransformer.nodes([e.target]);
+        }
       }
     });
   }, []);
