@@ -12,7 +12,7 @@ function Root(props: BoxProps) {
           gridTemplateColumns: {
             xs: "1fr",
             sm: "60px minmax(60px, 1fr)",
-            md: "60px 200px minmax(500px, 1fr)",
+            md: "60px 200px minmax(500px, 1fr) 250px",
           },
           gridTemplateRows: "64px 1fr",
           minHeight: "100vh",
@@ -64,6 +64,28 @@ function SideNav(props: BoxProps) {
           display: {
             xs: "none",
             sm: "initial",
+          },
+        },
+        ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
+      ]}
+    />
+  );
+}
+
+function RightPane(props: BoxProps) {
+  return (
+    <Box
+      className="Inbox"
+      {...props}
+      sx={[
+        {
+          bgcolor: "background.surface",
+          borderLeft: "1px solid",
+          borderColor: "divider",
+          p: 1,
+          display: {
+            xs: "none",
+            md: "initial",
           },
         },
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
@@ -143,4 +165,4 @@ function SideDrawer(
   );
 }
 
-export default { Root, Header, SideNav, SidePane, SideDrawer, Main };
+export default { Root, Header, SideNav, SidePane, SideDrawer, Main, RightPane };

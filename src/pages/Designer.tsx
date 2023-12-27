@@ -61,6 +61,7 @@ const Designer = () => {
           <ThreeDPreviewer imageData={imageData} />
         )}
       </DesignerLayout.Main>
+      <DesignerLayout.RightPane></DesignerLayout.RightPane>
     </DesignerLayout.Root>
   );
 };
