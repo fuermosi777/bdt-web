@@ -3,12 +3,14 @@ import { PackageAsset, PackageShapeType } from "../interfaces/PackagePreset.ts";
 import "./PackageEditor.scss";
 import Konva from "konva";
 import ThreeDPreviewer from "./ThreeDPreviewer.tsx";
+import { useDesignerStore } from "../stores/DesignerStore.ts";
 
 const PackageEditor = (props: {
   asset: PackageAsset;
   onEdited: (imageData: ThreeDPreviewer.ImageData) => void;
   hidden: boolean;
 }) => {
+  const setSelectedNodes = useDesignerStore((s) => s.setSelectedNodes);
   const canvasRef = useRef<HTMLDivElement>(null);
   const { asset } = props;
   let stage: Konva.Stage | null;
@@ -127,6 +129,7 @@ const PackageEditor = (props: {
       if (e.target === stage) {
         imageTransformer.nodes([]);
         textTransformer.nodes([]);
+        setSelectedNodes([]);
         return;
       }
 
@@ -134,14 +137,19 @@ const PackageEditor = (props: {
       if (!e.target.draggable()) {
         imageTransformer.nodes([]);
         textTransformer.nodes([]);
+        setSelectedNodes([]);
         return;
       }
 
       // do we pressed shift or ctrl?
       const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-      const isSelected = imageTransformer.nodes().indexOf(e.target) >= 0;
+      const isSelected =
+        imageTransformer.nodes().indexOf(e.target) >= 0 ||
+        textTransformer.nodes().indexOf(e.target) >= 0;
 
       if (e.target.hasName("image")) {
+        // If clicking image, clear tr on texts.
+        textTransformer.nodes([]);
         if (!metaPressed && !isSelected) {
           // if no key pressed and the node is not selected
           // select just one.
@@ -159,12 +167,18 @@ const PackageEditor = (props: {
           imageTransformer.nodes(nodes);
         }
       } else if (e.target.hasName("text")) {
+        imageTransformer.nodes([]);
         if (!metaPressed && !isSelected) {
           // if no key pressed and the node is not selected
           // select just one.
           textTransformer.nodes([e.target]);
         }
       }
+
+      // Trigger store update.
+      let imageNodes = imageTransformer.nodes().slice();
+      let textNodes = textTransformer.nodes().slice();
+      setSelectedNodes([...imageNodes, ...textNodes]);
     });
   }, []);
 

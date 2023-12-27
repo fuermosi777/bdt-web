@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { DesignerMenuItemType } from "../constants/designerMenuItems.ts";
 import { PackageAsset } from "../interfaces/PackagePreset.ts";
 import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
+import Konva from "konva";
 
 type DisplayType = "editor" | "previewer";
 
@@ -19,6 +20,9 @@ interface DesignState {
 
   imageData?: ThreeDPreviewer.ImageData;
   setImageData: (data: ThreeDPreviewer.ImageData) => void;
+
+  selectedNodes: Konva.Node[];
+  setSelectedNodes: (nodes: Konva.Node[]) => void;
 }
 
 const useDesignerStore = create<DesignState>((set) => ({
@@ -30,6 +34,9 @@ const useDesignerStore = create<DesignState>((set) => ({
   setDisplay: (type) => set((_) => ({ display: type })),
 
   setImageData: (data) => set(() => ({ imageData: data })),
+
+  selectedNodes: [],
+  setSelectedNodes: (nodes) => set(() => ({ selectedNodes: nodes })),
 }));
 
 export { useDesignerStore };

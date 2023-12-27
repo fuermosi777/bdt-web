@@ -11,6 +11,7 @@ import { DesignerMenuItemType } from "../constants/designerMenuItems.ts";
 import { Button } from "@mui/joy";
 import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
 import { ShoppingBag } from "react-feather";
+import RightPane from "../components/RightPane.tsx";
 
 const AssetTile = (props: { asset: PackageAsset }) => {
   const setAsset = useDesignerStore((s) => s.setAsset);
@@ -34,7 +35,7 @@ const Designer = () => {
   const display = useDesignerStore((s) => s.display);
   const imageData = useDesignerStore((s) => s.imageData);
   const setImageData = useDesignerStore((s) => s.setImageData);
-
+  const selectedNodes = useDesignerStore((s) => s.selectedNodes);
   return (
     <DesignerLayout.Root>
       <DesignerLayout.Header>
@@ -61,7 +62,7 @@ const Designer = () => {
           <ThreeDPreviewer imageData={imageData} />
         )}
       </DesignerLayout.Main>
-      <DesignerLayout.RightPane></DesignerLayout.RightPane>
+      {selectedNodes.length > 0 && <RightPane />}
     </DesignerLayout.Root>
   );
 };
