@@ -8,7 +8,7 @@ import {
   PackageShapeType,
 } from "../interfaces/PackagePreset.ts";
 
-const top: PackageShape = {
+const top = () => ({
   id: uuid(),
   type: PackageShapeType.Image,
   url: "/presets/2/top.png",
@@ -17,9 +17,9 @@ const top: PackageShape = {
   x: 0,
   y: 0,
   draggable: false,
-};
+});
 
-const side: PackageShape = {
+const side = () => ({
   id: uuid(),
   type: PackageShapeType.Image,
   url: "/presets/2/side.png",
@@ -28,9 +28,9 @@ const side: PackageShape = {
   x: 0,
   y: 0,
   draggable: false,
-};
+});
 
-const stamp: PackageShape = {
+const stamp = () => ({
   id: uuid(),
   type: PackageShapeType.Image,
   url: "/presets/2/stamp.png",
@@ -39,9 +39,9 @@ const stamp: PackageShape = {
   x: 20,
   y: 20,
   draggable: true,
-};
+});
 
-const sampleChar1: PackageShape = {
+const sampleChar1 = () => ({
   id: uuid(),
   type: PackageShapeType.Text,
   text: "样",
@@ -52,9 +52,9 @@ const sampleChar1: PackageShape = {
   y: 80,
   width: 100,
   draggable: true,
-};
+});
 
-const sampleChar2: PackageShape = {
+const sampleChar2 = () => ({
   id: uuid(),
   type: PackageShapeType.Text,
   text: "品",
@@ -65,9 +65,9 @@ const sampleChar2: PackageShape = {
   y: 280,
   width: 100,
   draggable: true,
-};
+});
 
-const slogan: PackageShape = {
+const slogan = () => ({
   id: uuid(),
   type: PackageShapeType.Text,
   text: "企业宣传语",
@@ -78,9 +78,9 @@ const slogan: PackageShape = {
   y: 580,
   width: 50,
   draggable: true,
-};
+});
 
-const text1: PackageShape = {
+const text1 = () => ({
   id: uuid(),
   type: PackageShapeType.Text,
   text: "【酱香·珍藏】",
@@ -91,9 +91,9 @@ const text1: PackageShape = {
   y: 880,
   width: 200,
   draggable: true,
-};
+});
 
-const text2: PackageShape = {
+const text2 = () => ({
   id: uuid(),
   type: PackageShapeType.Text,
   text: "酱香型白酒 酒精度：53%VOL 净含量：500ML",
@@ -104,9 +104,9 @@ const text2: PackageShape = {
   y: 1050,
   width: 400,
   draggable: true,
-};
+});
 
-const gate: PackageShape = {
+const gate = () => ({
   id: uuid(),
   type: PackageShapeType.Image,
   url: "/presets/2/gate.png",
@@ -115,9 +115,9 @@ const gate: PackageShape = {
   x: 60,
   y: 120,
   draggable: true,
-};
+});
 
-const label: PackageShape = {
+const label = () => ({
   id: uuid(),
   type: PackageShapeType.Image,
   url: "/presets/2/label.png",
@@ -126,9 +126,9 @@ const label: PackageShape = {
   x: 25,
   y: 300,
   draggable: true,
-};
+});
 
-const barcode: PackageShape = {
+const barcode = () => ({
   id: uuid(),
   type: PackageShapeType.Image,
   url: "/presets/2/barcode.png",
@@ -137,7 +137,7 @@ const barcode: PackageShape = {
   x: 150,
   y: 1000,
   draggable: true,
-};
+});
 
 const packagePresets: PackagePreset[] = [
   {
@@ -158,7 +158,7 @@ const packagePresets: PackagePreset[] = [
             height: 440,
             x: 0,
             y: 0,
-            shapes: [top, stamp, sampleChar1, sampleChar2],
+            shapes: [top(), stamp(), sampleChar1(), sampleChar2()],
           },
           // Left side.
           {
@@ -167,7 +167,7 @@ const packagePresets: PackagePreset[] = [
             y: 440,
             width: 440,
             height: 1138,
-            shapes: [side, gate, label, barcode],
+            shapes: [side(), gate(), label(), barcode()],
           },
           // Front side.
           {
@@ -177,13 +177,13 @@ const packagePresets: PackagePreset[] = [
             width: 440,
             height: 1138,
             shapes: [
-              side,
-              stamp,
-              sampleChar1,
-              sampleChar2,
-              slogan,
-              text1,
-              text2,
+              side(),
+              stamp(),
+              sampleChar1(),
+              sampleChar2(),
+              slogan(),
+              text1(),
+              text2(),
             ],
           },
           // Right side.
@@ -193,7 +193,7 @@ const packagePresets: PackagePreset[] = [
             y: 440,
             width: 440,
             height: 1138,
-            shapes: [side, gate, label, barcode],
+            shapes: [side(), gate(), label(), barcode()],
           },
           // Back side.
           {
@@ -203,13 +203,13 @@ const packagePresets: PackagePreset[] = [
             width: 440,
             height: 1138,
             shapes: [
-              side,
-              stamp,
-              sampleChar1,
-              sampleChar2,
-              slogan,
-              text1,
-              text2,
+              side(),
+              stamp(),
+              sampleChar1(),
+              sampleChar2(),
+              slogan(),
+              text1(),
+              text2(),
             ],
           },
           // Bottom side.
@@ -219,7 +219,7 @@ const packagePresets: PackagePreset[] = [
             y: 1578,
             width: 440,
             height: 440,
-            shapes: [top, stamp, sampleChar1, sampleChar2],
+            shapes: [top(), stamp(), sampleChar1(), sampleChar2()],
           },
         ],
       },

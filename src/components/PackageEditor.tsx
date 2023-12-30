@@ -6,6 +6,7 @@ import ThreeDPreviewer from "./ThreeDPreviewer.tsx";
 import { useDesignerStore } from "../stores/DesignerStore.ts";
 
 const PackageEditor = (props: {
+  // Immutable.
   asset: PackageAsset;
   onEdited: (imageData: ThreeDPreviewer.ImageData) => void;
   hidden: boolean;
@@ -62,6 +63,7 @@ const PackageEditor = (props: {
           let image = new Image();
           image.src = shape.url || "";
           let imageToAdd = new Konva.Image({
+            id: shape.id,
             name: "image",
             x: shape.x,
             y: shape.y,
@@ -77,6 +79,7 @@ const PackageEditor = (props: {
           groupToAdd.add(imageToAdd);
         } else if (shape.type == PackageShapeType.Text) {
           let text = new Konva.Text({
+            id: shape.id,
             name: "text",
             x: shape.x,
             y: shape.y,
@@ -180,7 +183,9 @@ const PackageEditor = (props: {
       let textNodes = textTransformer.nodes().slice();
       setSelectedNodes([...imageNodes, ...textNodes]);
     });
-  }, []);
+
+    saveData();
+  }, [asset]);
 
   return (
     <div className={"PackageEditor " + (props.hidden ? "hidden" : "")}>

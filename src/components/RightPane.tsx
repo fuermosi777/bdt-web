@@ -6,10 +6,12 @@ import Konva from "konva";
 
 const RightPane = () => {
   const selectedNodes = useDesignerStore((s) => s.selectedNodes);
-  const setSelectedNodes = useDesignerStore((s) => s.setSelectedNodes);
-  if (selectedNodes.length === 1) {
-    console.log(selectedNodes[0]);
-  }
+  const updateSelectedNodes = useDesignerStore((s) => s.updateSelectedNodes);
+
+
+  // if (selectedNodes.length === 1) {
+  //   console.log(selectedNodes[0]);
+  // }
 
   function isImageNode() {
     if (selectedNodes.length !== 1) {
@@ -98,7 +100,7 @@ const RightPane = () => {
                 onChange={(e) => {
                   let node: Konva.Node = selectedNodes[0].clone();
                   node.setAttr("text", e.target.value);
-                  setSelectedNodes([node]);
+                  updateSelectedNodes(node);
                 }}
               />
             </>

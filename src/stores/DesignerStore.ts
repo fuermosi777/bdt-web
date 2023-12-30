@@ -24,6 +24,8 @@ interface DesignState {
 
   selectedNodes: Konva.Node[];
   setSelectedNodes: (nodes: Konva.Node[]) => void;
+  // Update selected node. Assuming only one eligible node selected.
+  updateSelectedNodes: (by: Konva.Node) => void;
 }
 
 const useDesignerStore = create<DesignState>((set) => ({
@@ -38,6 +40,24 @@ const useDesignerStore = create<DesignState>((set) => ({
 
   selectedNodes: [],
   setSelectedNodes: (nodes) => set(() => ({ selectedNodes: nodes })),
+  updateSelectedNodes: (by) =>
+    set((state) => {
+      let result: Partial<DesignState> = { selectedNodes: [by] };
+      if (state.selectedNodes.length === 1 && state.asset) {
+        // Update asset.
+        let updatedAsset = structuredClone(state.asset);
+        for (let group of updatedAsset.groups) {
+          for (let shape of group.shapes) {
+            if (shape.id === by.attrs.id) {
+              shape.text = by.attrs.text
+              break;
+            }
+          }
+        }
+        result.asset = updatedAsset
+      }
+      return result;
+    }),
 }));
 
 export { useDesignerStore };
