@@ -1,10 +1,12 @@
 import React from "react";
 import { useDesignerStore } from "../stores/DesignerStore.ts";
-import { Box, Sheet, Typography } from "@mui/joy";
+import { Box, Sheet, Textarea, Typography } from "@mui/joy";
 import { Literal } from "../constants/literals.ts";
+import Konva from "konva";
 
 const RightPane = () => {
   const selectedNodes = useDesignerStore((s) => s.selectedNodes);
+  const setSelectedNodes = useDesignerStore((s) => s.setSelectedNodes);
   if (selectedNodes.length === 1) {
     console.log(selectedNodes[0]);
   }
@@ -90,9 +92,15 @@ const RightPane = () => {
           {isTextNode() && (
             <>
               <Typography level="title-sm">{Literal.TextContent}</Typography>
-              <Typography level="body-sm" textColor="text.primary">
-                "{selectedNodes[0].attrs.text}"
-              </Typography>
+              <Textarea
+                size="sm"
+                value={selectedNodes[0].attrs.text}
+                onChange={(e) => {
+                  let node: Konva.Node = selectedNodes[0].clone();
+                  node.setAttr("text", e.target.value);
+                  setSelectedNodes([node]);
+                }}
+              />
             </>
           )}
         </Box>

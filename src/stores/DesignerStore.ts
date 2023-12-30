@@ -18,6 +18,7 @@ interface DesignState {
   display: DisplayType;
   setDisplay: (type: DisplayType) => void;
 
+  // For 3D preview.
   imageData?: ThreeDPreviewer.ImageData;
   setImageData: (data: ThreeDPreviewer.ImageData) => void;
 

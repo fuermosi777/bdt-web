@@ -14,6 +14,7 @@ const SideNav = () => {
         const Icon = item.icon;
         return (
           <ListItemButton
+            key={item.type}
             orientation="vertical"
             variant="plain"
             disabled={item.disabled}

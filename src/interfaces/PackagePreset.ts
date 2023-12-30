@@ -25,6 +25,7 @@ enum PackageShapeType {
 }
 
 interface PackageShape {
+  id: string;
   type: PackageShapeType;
   x: number;
   y: number;
@@ -43,6 +44,7 @@ interface PackageShape {
 }
 
 interface PackageGroup {
+  id: string;
   x: number;
   y: number;
   width: number;
@@ -51,6 +53,7 @@ interface PackageGroup {
 }
 
 interface PackageAsset {
+  id: string;
   type: PackageType;
   groups: PackageGroup[];
   width: number;

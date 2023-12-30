@@ -47,7 +47,7 @@ const Designer = () => {
       <DesignerLayout.SidePane>
         {menuItemType === DesignerMenuItemType.Package &&
           packagePresets[0].assets.map((asset) => {
-            return <AssetTile asset={asset} />;
+            return <AssetTile asset={asset} key={asset.id} />;
           })}
       </DesignerLayout.SidePane>
       <DesignerLayout.Main>
