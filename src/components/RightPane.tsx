@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDesignerStore } from "../stores/DesignerStore.ts";
-import { Box, Sheet, Textarea, Typography } from "@mui/joy";
+import { Box, Button, Sheet, Textarea, Typography } from "@mui/joy";
 import { Literal } from "../constants/literals.ts";
 import Konva from "konva";
 
 const RightPane = () => {
   const selectedNodes = useDesignerStore((s) => s.selectedNodes);
   const updateSelectedNodes = useDesignerStore((s) => s.updateSelectedNodes);
-
+  const [text, setText] = useState<string>(getDefaultText());
 
   // if (selectedNodes.length === 1) {
   //   console.log(selectedNodes[0]);
@@ -26,6 +26,26 @@ const RightPane = () => {
     }
     return selectedNodes[0].attrs.name === "text";
   }
+
+  function getDefaultText() {
+    return isTextNode() ? selectedNodes[0].attrs.text : "";
+  }
+
+  function isTextChanged() {
+    if (!isTextNode()) return false;
+    return text !== getDefaultText();
+  }
+
+  function saveText() {
+    let node: Konva.Node = selectedNodes[0].clone();
+    node.setAttr("text", text);
+    updateSelectedNodes(node);
+  }
+
+  useEffect(() => {
+    // Reset text if selected nodes are changed.
+    setText(getDefaultText());
+  }, [selectedNodes]);
 
   return (
     <Sheet
@@ -96,14 +116,18 @@ const RightPane = () => {
               <Typography level="title-sm">{Literal.TextContent}</Typography>
               <Textarea
                 size="sm"
-                value={selectedNodes[0].attrs.text}
+                value={text}
                 onChange={(e) => {
-                  let node: Konva.Node = selectedNodes[0].clone();
-                  node.setAttr("text", e.target.value);
-                  updateSelectedNodes(node);
+                  setText(e.target.value);
                 }}
               />
             </>
+          )}
+
+          {isTextChanged() && (
+            <Button variant="soft" onClick={saveText}>
+              {Literal.Save}
+            </Button>
           )}
         </Box>
       )}

@@ -15,7 +15,8 @@ enum Literal {
   Height = "高度",
   X = "X",
   Y = "Y",
-  TextContent = "文字内容"
+  TextContent = "文字内容",
+  Save = "保存"
 }
 
 namespace Literal {
