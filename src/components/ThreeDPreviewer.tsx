@@ -5,6 +5,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { useRef } from "react";
 import { BoxPreviewerImageData } from "../interfaces/PreviewerImageData.ts";
 
+// 3D previewer. Don't interact with the store.
 const ThreeDPreviewer = (props: { imageData: BoxPreviewerImageData }) => {
   const { imageData } = props;
   const canvasRef = useRef<HTMLDivElement>(null);

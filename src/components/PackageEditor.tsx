@@ -20,6 +20,7 @@ const PackageEditor = (props: {
   hidden: boolean;
 }) => {
   const setSelectedNodes = useDesignerStore((s) => s.setSelectedNodes);
+  const setImagesLoaded = useDesignerStore((s) => s.setImagesLoaded);
   const canvasRef = useRef<HTMLDivElement>(null);
   const { asset } = props;
   let stage: Konva.Stage | null;
@@ -65,6 +66,9 @@ const PackageEditor = (props: {
 
     stage.on("dragend", saveData);
 
+    let imageCount = 0;
+    let imageLoadedCount = 0;
+
     for (let group of asset.groups) {
       const groupToAdd = new Konva.Group({
         x: group.x,
@@ -78,8 +82,17 @@ const PackageEditor = (props: {
 
       for (let shape of group.shapes) {
         if (shape.type === PackageShapeType.Image) {
+          imageCount++;
           let image = new Image();
           image.src = shape.url || "";
+          image.onload = () => {
+            imageLoadedCount++;
+            if (imageLoadedCount === imageCount) {
+              setImagesLoaded(true);
+              // Trigger manual save data for preview after all images are loaded.
+              saveData();
+            }
+          };
           let imageToAdd = new Konva.Image({
             id: shape.id,
             name: "image",
@@ -201,8 +214,6 @@ const PackageEditor = (props: {
       let textNodes = textTransformer.nodes().slice();
       setSelectedNodes([...imageNodes, ...textNodes]);
     });
-
-    saveData();
   }, [asset]);
 
   return (

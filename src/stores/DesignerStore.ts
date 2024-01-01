@@ -19,6 +19,8 @@ interface DesignState {
   setDisplay: (type: DisplayType) => void;
 
   // For 3D preview.
+  isImagesLoaded: boolean;
+  setImagesLoaded: (loaded: boolean) => void;
   imageData?: PreviewerImageData;
   setImageData: (data: PreviewerImageData) => void;
 
@@ -36,6 +38,8 @@ const useDesignerStore = create<DesignState>((set) => ({
   display: "editor",
   setDisplay: (type) => set((_) => ({ display: type })),
 
+  isImagesLoaded: false,
+  setImagesLoaded: (loaded) => set(() => ({ isImagesLoaded: loaded })),
   setImageData: (data) => set(() => ({ imageData: data })),
 
   selectedNodes: [],
