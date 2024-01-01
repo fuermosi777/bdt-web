@@ -55,6 +55,7 @@ const Designer = () => {
       </DesignerLayout.SideNav>
       <DesignerLayout.SidePane>
         {menuItemType === DesignerMenuItemType.Package &&
+          display === "editor" &&
           packagePresets[0].assets.map((asset) => {
             return <AssetTile asset={asset} key={asset.id} />;
           })}
