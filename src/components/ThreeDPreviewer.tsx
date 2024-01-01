@@ -3,19 +3,9 @@ import "./ThreeDPreviewer.scss";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { useRef } from "react";
+import { BoxPreviewerImageData } from "../interfaces/PreviewerImageData.ts";
 
-namespace ThreeDPreviewer {
-  export interface ImageData {
-    top: string,
-    cover: string,
-    back: string,
-    left: string,
-    right: string,
-    bottom: string
-  } 
-}
-
-const ThreeDPreviewer = (props: {imageData: ThreeDPreviewer.ImageData}) => {
+const ThreeDPreviewer = (props: { imageData: BoxPreviewerImageData }) => {
   const { imageData } = props;
   const canvasRef = useRef<HTMLDivElement>(null);
 

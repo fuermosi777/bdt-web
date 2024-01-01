@@ -12,6 +12,11 @@ import { Button } from "@mui/joy";
 import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
 import { ShoppingBag } from "react-feather";
 import RightPane from "../components/RightPane.tsx";
+import ExpBottlePreview from "../components/ExpBottlePreview.tsx";
+import {
+  BoxPreviewerImageData,
+  PlainBottlePreviewerImageData,
+} from "../interfaces/PreviewerImageData.ts";
 
 const AssetTile = (props: { asset: PackageAsset }) => {
   const setAsset = useDesignerStore((s) => s.setAsset);
@@ -19,6 +24,10 @@ const AssetTile = (props: { asset: PackageAsset }) => {
     <Button
       startDecorator={<ShoppingBag />}
       onClick={() => setAsset(props.asset)}
+      sx={{
+        // TODO: remove this to outer layout.
+        marginBottom: 1,
+      }}
     >
       {PackageType.label(props.asset.type)}
     </Button>
@@ -58,9 +67,18 @@ const Designer = () => {
             hidden={display !== "editor"}
           />
         )}
-        {display === "previewer" && imageData && (
-          <ThreeDPreviewer imageData={imageData} />
-        )}
+        {display === "previewer" &&
+          imageData &&
+          asset?.type === PackageType.Box && (
+            <ThreeDPreviewer imageData={imageData as BoxPreviewerImageData} />
+          )}
+        {display === "previewer" &&
+          imageData &&
+          asset?.type === PackageType.PlainBottle && (
+            <ExpBottlePreview
+              imageData={imageData as PlainBottlePreviewerImageData}
+            />
+          )}
       </DesignerLayout.Main>
       {selectedNodes.length > 0 && <RightPane />}
     </DesignerLayout.Root>

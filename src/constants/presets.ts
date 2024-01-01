@@ -6,7 +6,19 @@ import {
   PackageShape,
   PackageType,
   PackageShapeType,
+  PackageAsset,
 } from "../interfaces/PackagePreset.ts";
+
+const bottleCover = () => ({
+  id: uuid(),
+  type: PackageShapeType.Image,
+  url: "/presets/2/top.png",
+  width: 800,
+  height: 400,
+  x: 0,
+  y: 0,
+  draggable: false,
+});
 
 const top = () => ({
   id: uuid(),
@@ -139,91 +151,108 @@ const barcode = () => ({
   draggable: true,
 });
 
+const boxAsset: PackageAsset = {
+  id: uuid(),
+  type: PackageType.Box,
+  width: 1760,
+  height: 1578,
+  groups: [
+    // Top side.
+    {
+      id: uuid(),
+      width: 440,
+      height: 440,
+      x: 0,
+      y: 0,
+      shapes: [top(), stamp(), sampleChar1(), sampleChar2()],
+    },
+    // Left side.
+    {
+      id: uuid(),
+      x: 0,
+      y: 440,
+      width: 440,
+      height: 1138,
+      shapes: [side(), gate(), label(), barcode()],
+    },
+    // Front side.
+    {
+      id: uuid(),
+      x: 440,
+      y: 440,
+      width: 440,
+      height: 1138,
+      shapes: [
+        side(),
+        stamp(),
+        sampleChar1(),
+        sampleChar2(),
+        slogan(),
+        text1(),
+        text2(),
+      ],
+    },
+    // Right side.
+    {
+      id: uuid(),
+      x: 880,
+      y: 440,
+      width: 440,
+      height: 1138,
+      shapes: [side(), gate(), label(), barcode()],
+    },
+    // Back side.
+    {
+      id: uuid(),
+      x: 1320,
+      y: 440,
+      width: 440,
+      height: 1138,
+      shapes: [
+        side(),
+        stamp(),
+        sampleChar1(),
+        sampleChar2(),
+        slogan(),
+        text1(),
+        text2(),
+      ],
+    },
+    // Bottom side.
+    {
+      id: uuid(),
+      x: 880,
+      y: 1578,
+      width: 440,
+      height: 440,
+      shapes: [top(), stamp(), sampleChar1(), sampleChar2()],
+    },
+  ],
+};
+
+const bottleAsset: PackageAsset = {
+  id: uuid(),
+  type: PackageType.PlainBottle,
+  width: 800,
+  height: 400,
+  groups: [
+    {
+      id: uuid(),
+      width: 800,
+      height: 400,
+      x: 0,
+      y: 0,
+      shapes: [bottleCover(), {...stamp(), x: 180, y: 0}, sampleChar1(), sampleChar2()],
+    },
+  ],
+};
+
 const packagePresets: PackagePreset[] = [
   {
     id: uuid(),
     name: "青花白",
     thumbnailUrl: "/presets/2/thumbnail.jpg",
-    assets: [
-      {
-        id: uuid(),
-        type: PackageType.Box,
-        width: 1760,
-        height: 1578,
-        groups: [
-          // Top side.
-          {
-            id: uuid(),
-            width: 440,
-            height: 440,
-            x: 0,
-            y: 0,
-            shapes: [top(), stamp(), sampleChar1(), sampleChar2()],
-          },
-          // Left side.
-          {
-            id: uuid(),
-            x: 0,
-            y: 440,
-            width: 440,
-            height: 1138,
-            shapes: [side(), gate(), label(), barcode()],
-          },
-          // Front side.
-          {
-            id: uuid(),
-            x: 440,
-            y: 440,
-            width: 440,
-            height: 1138,
-            shapes: [
-              side(),
-              stamp(),
-              sampleChar1(),
-              sampleChar2(),
-              slogan(),
-              text1(),
-              text2(),
-            ],
-          },
-          // Right side.
-          {
-            id: uuid(),
-            x: 880,
-            y: 440,
-            width: 440,
-            height: 1138,
-            shapes: [side(), gate(), label(), barcode()],
-          },
-          // Back side.
-          {
-            id: uuid(),
-            x: 1320,
-            y: 440,
-            width: 440,
-            height: 1138,
-            shapes: [
-              side(),
-              stamp(),
-              sampleChar1(),
-              sampleChar2(),
-              slogan(),
-              text1(),
-              text2(),
-            ],
-          },
-          // Bottom side.
-          {
-            id: uuid(),
-            x: 880,
-            y: 1578,
-            width: 440,
-            height: 440,
-            shapes: [top(), stamp(), sampleChar1(), sampleChar2()],
-          },
-        ],
-      },
-    ],
+    assets: [boxAsset, bottleAsset],
   },
 ];
 

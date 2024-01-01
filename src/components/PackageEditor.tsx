@@ -1,14 +1,22 @@
 import React, { useEffect, useRef } from "react";
-import { PackageAsset, PackageShapeType } from "../interfaces/PackagePreset.ts";
+import {
+  PackageAsset,
+  PackageShapeType,
+  PackageType,
+} from "../interfaces/PackagePreset.ts";
 import "./PackageEditor.scss";
 import Konva from "konva";
-import ThreeDPreviewer from "./ThreeDPreviewer.tsx";
 import { useDesignerStore } from "../stores/DesignerStore.ts";
+import {
+  PreviewerImageData,
+  BoxPreviewerImageData,
+  PlainBottlePreviewerImageData,
+} from "../interfaces/PreviewerImageData.ts";
 
 const PackageEditor = (props: {
   // Immutable.
   asset: PackageAsset;
-  onEdited: (imageData: ThreeDPreviewer.ImageData) => void;
+  onEdited: (imageData: PreviewerImageData) => void;
   hidden: boolean;
 }) => {
   const setSelectedNodes = useDesignerStore((s) => s.setSelectedNodes);
@@ -18,16 +26,24 @@ const PackageEditor = (props: {
 
   function saveData() {
     if (!stage) return;
-    // TODO: make this less curated.
-    let imageData: ThreeDPreviewer.ImageData = {
-      top: stage.find("Group")[0].toDataURL({ pixelRatio: 2 }),
-      cover: stage.find("Group")[1].toDataURL({ pixelRatio: 2 }),
-      back: stage.find("Group")[2].toDataURL({ pixelRatio: 2 }),
-      left: stage.find("Group")[3].toDataURL({ pixelRatio: 2 }),
-      right: stage.find("Group")[4].toDataURL({ pixelRatio: 2 }),
-      bottom: stage.find("Group")[5].toDataURL({ pixelRatio: 2 }),
-    };
-    props.onEdited(imageData);
+
+    if (stage.attrs.name === PackageType.Box) {
+      let imageData: BoxPreviewerImageData = {
+        top: stage.find("Group")[0].toDataURL({ pixelRatio: 2 }),
+        cover: stage.find("Group")[1].toDataURL({ pixelRatio: 2 }),
+        back: stage.find("Group")[2].toDataURL({ pixelRatio: 2 }),
+        left: stage.find("Group")[3].toDataURL({ pixelRatio: 2 }),
+        right: stage.find("Group")[4].toDataURL({ pixelRatio: 2 }),
+        bottom: stage.find("Group")[5].toDataURL({ pixelRatio: 2 }),
+      };
+      props.onEdited(imageData);
+    }
+    if (stage.attrs.name === PackageType.PlainBottle) {
+      let imageData: PlainBottlePreviewerImageData = {
+        cover: stage.find("Group")[0].toDataURL({ pixelRatio: 2 }),
+      };
+      props.onEdited(imageData);
+    }
   }
 
   useEffect(() => {
@@ -38,6 +54,8 @@ const PackageEditor = (props: {
       width: canvasRef.current.offsetWidth,
       height: canvasRef.current.offsetHeight,
       draggable: false,
+      id: asset.id,
+      name: asset.type,
     });
 
     const layer = new Konva.Layer();

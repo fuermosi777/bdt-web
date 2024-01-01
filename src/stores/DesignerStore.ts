@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { DesignerMenuItemType } from "../constants/designerMenuItems.ts";
 import { PackageAsset } from "../interfaces/PackagePreset.ts";
-import ThreeDPreviewer from "../components/ThreeDPreviewer.tsx";
 import Konva from "konva";
+import { PreviewerImageData } from "../interfaces/PreviewerImageData.ts";
 
 type DisplayType = "editor" | "previewer";
 
@@ -19,8 +19,8 @@ interface DesignState {
   setDisplay: (type: DisplayType) => void;
 
   // For 3D preview.
-  imageData?: ThreeDPreviewer.ImageData;
-  setImageData: (data: ThreeDPreviewer.ImageData) => void;
+  imageData?: PreviewerImageData;
+  setImageData: (data: PreviewerImageData) => void;
 
   selectedNodes: Konva.Node[];
   setSelectedNodes: (nodes: Konva.Node[]) => void;
@@ -49,12 +49,12 @@ const useDesignerStore = create<DesignState>((set) => ({
         for (let group of updatedAsset.groups) {
           for (let shape of group.shapes) {
             if (shape.id === by.attrs.id) {
-              shape.text = by.attrs.text
+              shape.text = by.attrs.text;
               break;
             }
           }
         }
-        result.asset = updatedAsset
+        result.asset = updatedAsset;
       }
       return result;
     }),
