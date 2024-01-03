@@ -10,7 +10,7 @@ function Root(props: BoxProps) {
           bgcolor: "background.appBody",
           display: "grid",
           gridTemplateColumns: {
-            xs: "1fr",
+            xs: "60px 1fr",
             sm: "60px minmax(60px, 1fr)",
             md: "60px 200px minmax(500px, 1fr) 250px",
           },
@@ -62,7 +62,6 @@ function SideNav(props: BoxProps) {
           borderRight: "1px solid",
           borderColor: "divider",
           display: {
-            xs: "none",
             sm: "initial",
           },
         },

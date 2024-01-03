@@ -25,7 +25,7 @@ const Header = () => {
         justifyContent="center"
         alignItems="center"
         spacing={1}
-        sx={{ display: { xs: "none", sm: "flex" } }}
+        sx={{ display: { sm: "flex" } }}
       >
         <IconButton
           size="md"
@@ -33,7 +33,7 @@ const Header = () => {
           color="neutral"
           href="/"
           sx={{
-            display: { xs: "none", sm: "inline-flex" },
+            display: { sm: "inline-flex" },
             borderRadius: "50%",
           }}
         >
