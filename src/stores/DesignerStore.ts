@@ -7,13 +7,16 @@ import { PreviewerImageData } from "../interfaces/PreviewerImageData.ts";
 type DisplayType = "editor" | "previewer";
 
 interface DesignState {
-  menuItemType: DesignerMenuItemType;
-  setMenuItemType: (type: DesignerMenuItemType) => void;
+  tabIndex: number;
+  setTabIndex: (index: number) => void;
 
   // The package asset to be edited.
   asset?: PackageAsset;
   setAsset: (by: PackageAsset) => void;
   closeAsset: () => void;
+
+  leftDrawerOpen: boolean;
+  setLeftDrawer: (open: boolean) => void;
 
   display: DisplayType;
   setDisplay: (type: DisplayType) => void;
@@ -31,10 +34,15 @@ interface DesignState {
 }
 
 const useDesignerStore = create<DesignState>((set) => ({
-  menuItemType: DesignerMenuItemType.Package,
-  setMenuItemType: (type) => set((_) => ({ menuItemType: type })),
+  tabIndex: 0,
+  setTabIndex: (index) => set((_) => ({ tabIndex: index })),
+
   setAsset: (by) => set((_) => ({ asset: by })),
   closeAsset: () => set((_) => ({ asset: undefined })),
+
+  leftDrawerOpen: false,
+  setLeftDrawer: (open) => set((_) => ({ leftDrawerOpen: open })),
+
   display: "editor",
   setDisplay: (type) => set((_) => ({ display: type })),
 
@@ -43,7 +51,10 @@ const useDesignerStore = create<DesignState>((set) => ({
   setImageData: (data) => set(() => ({ imageData: data })),
 
   selectedNodes: [],
-  setSelectedNodes: (nodes) => set(() => ({ selectedNodes: nodes })),
+  setSelectedNodes: (nodes) =>
+    set((s) => {
+      return { selectedNodes: nodes, rightDrawerOpen: true };
+    }),
   updateSelectedNodes: (by) =>
     set((state) => {
       let result: Partial<DesignState> = { selectedNodes: [by] };

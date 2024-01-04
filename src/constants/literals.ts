@@ -16,7 +16,8 @@ enum Literal {
   X = "X",
   Y = "Y",
   TextContent = "文字内容",
-  Save = "保存"
+  Save = "保存",
+  PickAsset = "选择包装"
 }
 
 namespace Literal {

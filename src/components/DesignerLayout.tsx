@@ -1,4 +1,4 @@
-import { Box, BoxProps, Sheet } from "@mui/joy";
+import { Box, BoxProps, Drawer, DrawerProps } from "@mui/joy";
 import React from "react";
 
 function Root(props: BoxProps) {
@@ -9,12 +9,8 @@ function Root(props: BoxProps) {
         {
           bgcolor: "background.appBody",
           display: "grid",
-          gridTemplateColumns: {
-            xs: "60px 1fr",
-            sm: "60px minmax(60px, 1fr)",
-            md: "60px 200px minmax(500px, 1fr) 250px",
-          },
-          gridTemplateRows: "64px 1fr",
+          gridTemplateColumns: "1fr",
+          gridTemplateRows: "64px 1fr 120px",
           minHeight: "100vh",
         },
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
@@ -58,55 +54,13 @@ function SideNav(props: BoxProps) {
       {...props}
       sx={[
         {
+          p: 2,
           bgcolor: "background.surface",
           borderRight: "1px solid",
           borderColor: "divider",
           display: {
+            xs: "none",
             sm: "initial",
-          },
-        },
-        ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
-      ]}
-    />
-  );
-}
-
-function RightPane(props: BoxProps) {
-  return (
-    <Box
-      className="Inbox"
-      {...props}
-      sx={[
-        {
-          bgcolor: "background.surface",
-          borderLeft: "1px solid",
-          borderColor: "divider",
-          p: 1,
-          display: {
-            xs: "none",
-            md: "initial",
-          },
-        },
-        ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
-      ]}
-    />
-  );
-}
-
-function SidePane(props: BoxProps) {
-  return (
-    <Box
-      className="Inbox"
-      {...props}
-      sx={[
-        {
-          bgcolor: "background.surface",
-          borderRight: "1px solid",
-          borderColor: "divider",
-          p: 1,
-          display: {
-            xs: "none",
-            md: "initial",
           },
         },
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
@@ -120,48 +74,64 @@ function Main(props: BoxProps) {
     <Box
       component="main"
       className="Main"
+      display="flex"
       {...props}
-      sx={[{ p: 2 }, ...(Array.isArray(props.sx) ? props.sx : [props.sx])]}
+      sx={[
+        {
+          // bgcolor: "background.appBody",
+          display: "grid",
+          gridTemplateColumns: "1fr 300px",
+          gridTemplateRows: "1fr",
+        },
+        ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
+      ]}
     />
   );
 }
 
-function SideDrawer(
-  props: BoxProps & { onClose: React.MouseEventHandler<HTMLDivElement> }
-) {
-  const { onClose, ...other } = props;
+function Tab(props: BoxProps) {
   return (
     <Box
-      {...other}
-      sx={[
-        { position: "fixed", zIndex: 1200, width: "100%", height: "100%" },
-        ...(Array.isArray(other.sx) ? other.sx : [other.sx]),
-      ]}
+      sx={{
+        flexGrow: 1,
+        m: 0,
+        p: 2,
+        borderTopLeftRadius: "12px",
+        borderTopRightRadius: "12px",
+        position: "sticky",
+        bottom: 0,
+        zIndex: 1100,
+      }}
     >
-      <Box
-        role="button"
-        onClick={onClose}
-        sx={{
-          position: "absolute",
-          inset: 0,
-          bgcolor: (theme) =>
-            `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
-        }}
-      />
-      <Sheet
-        sx={{
-          minWidth: 256,
-          width: "max-content",
-          height: "100%",
-          p: 2,
-          boxShadow: "lg",
-          bgcolor: "background.surface",
-        }}
-      >
-        {other.children}
-      </Sheet>
+      {props.children}
     </Box>
   );
 }
 
-export default { Root, Header, SideNav, SidePane, SideDrawer, Main, RightPane };
+function LeftDrawer(props: DrawerProps) {
+  return (
+    <Drawer
+      size="md"
+      variant="plain"
+      {...props}
+      slotProps={{
+        content: {
+          sx: {
+            bgcolor: "transparent",
+            p: { md: 3, sm: 0 },
+            boxShadow: "none",
+          },
+        },
+      }}
+    />
+  );
+}
+
+export default {
+  Root,
+  Header,
+  Main,
+  Tab,
+  LeftDrawer,
+  SideNav,
+};

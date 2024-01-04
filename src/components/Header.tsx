@@ -4,11 +4,17 @@ import { Box, Button, IconButton, Stack } from "@mui/joy";
 import { Package } from "react-feather";
 import { Literal } from "../constants/literals.ts";
 import { useDesignerStore } from "../stores/DesignerStore.ts";
+import {
+  DesignerMenuItemType,
+  designerMenuItems,
+} from "../constants/designerMenuItems.ts";
 
 const Header = () => {
   const display = useDesignerStore((s) => s.display);
   const setDisplay = useDesignerStore((s) => s.setDisplay);
   const isImagesLoaded = useDesignerStore((s) => s.isImagesLoaded);
+  const tabIndex = useDesignerStore((s) => s.tabIndex);
+  const setLeftDrawer = useDesignerStore((s) => s.setLeftDrawer);
 
   return (
     <Box
@@ -39,12 +45,26 @@ const Header = () => {
         >
           <Package />
         </IconButton>
+
+        {designerMenuItems[tabIndex].type === DesignerMenuItemType.Package && (
+          <Button
+            variant="plain"
+            color="neutral"
+            component="a"
+            onClick={() => setLeftDrawer(true)}
+            size="sm"
+            sx={{ alignSelf: "center" }}
+          >
+            {Literal.Package}
+          </Button>
+        )}
+
         <Button
           variant={display === "editor" ? "soft" : "plain"}
           color="neutral"
           component="a"
           // href="/joy-ui/getting-started/templates/email/"
-          onClick={() => setDisplay('editor')}
+          onClick={() => setDisplay("editor")}
           size="sm"
           sx={{ alignSelf: "center" }}
         >
@@ -55,7 +75,7 @@ const Header = () => {
           disabled={!isImagesLoaded}
           color="neutral"
           component="a"
-          onClick={() => setDisplay('previewer')}
+          onClick={() => setDisplay("previewer")}
           // href="/joy-ui/getting-started/templates/email/"
           size="sm"
           sx={{ alignSelf: "center" }}
@@ -64,7 +84,6 @@ const Header = () => {
         </Button>
       </Stack>
     </Box>
-    // {Literal.Title}
   );
 };
 

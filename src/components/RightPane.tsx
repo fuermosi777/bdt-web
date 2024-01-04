@@ -51,8 +51,8 @@ const RightPane = () => {
     <Sheet
       sx={{
         display: { xs: "none", sm: "initial" },
-        borderLeft: "1px solid",
-        borderColor: "divider",
+        // borderLeft: "1px solid",
+        // borderColor: "divider",
       }}
     >
       {selectedNodes.length > 1 && (
