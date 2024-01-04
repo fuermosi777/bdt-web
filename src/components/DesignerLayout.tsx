@@ -45,6 +45,27 @@ function Header(props: BoxProps) {
     />
   );
 }
+function Main(props: BoxProps) {
+  return (
+    <Box
+      component="main"
+      className="Main"
+      {...props}
+      sx={[
+        {
+          // bgcolor: "background.appBody",
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "minmax(0, 1fr)",
+            sm: "minmax(0, 1fr) 250px",
+          },
+          gridTemplateRows: "1fr",
+        },
+        ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
+      ]}
+    />
+  );
+}
 
 function SideNav(props: BoxProps) {
   return (
@@ -62,26 +83,6 @@ function SideNav(props: BoxProps) {
             xs: "none",
             sm: "initial",
           },
-        },
-        ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
-      ]}
-    />
-  );
-}
-
-function Main(props: BoxProps) {
-  return (
-    <Box
-      component="main"
-      className="Main"
-      display="flex"
-      {...props}
-      sx={[
-        {
-          // bgcolor: "background.appBody",
-          display: "grid",
-          gridTemplateColumns: "1fr 300px",
-          gridTemplateRows: "1fr",
         },
         ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
       ]}

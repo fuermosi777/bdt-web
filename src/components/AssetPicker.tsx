@@ -41,9 +41,6 @@ const AssetPicker = (props: { assets: PackageAsset[] }) => {
       <Divider />
       <DialogContent sx={{ gap: 2 }}>
         <FormControl>
-          <FormLabel sx={{ typography: "title-md", fontWeight: "bold" }}>
-            Property type
-          </FormLabel>
           <RadioGroup
             value={selectedAsset?.id}
             onChange={(event) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import {
   PackageAsset,
   PackageShapeType,
@@ -24,6 +24,22 @@ const PackageEditor = (props: {
   const canvasRef = useRef<HTMLDivElement>(null);
   const { asset } = props;
   let stage: Konva.Stage | null;
+
+  function fitStage() {
+    if (!stage) return;
+    if (!canvasRef.current) return;
+    let containerWidth = canvasRef.current?.offsetWidth;
+    let containerHeight = canvasRef.current?.offsetHeight;
+    console.log(containerWidth, containerHeight)
+
+    let scale = Math.min(
+      containerWidth / asset.width,
+      containerHeight / asset.height
+    );
+    stage.width(containerWidth);
+    stage.height(containerHeight);
+    stage.scale({ x: scale, y: scale });
+  }
 
   function saveData() {
     if (!stage) return;
@@ -61,9 +77,6 @@ const PackageEditor = (props: {
 
     const layer = new Konva.Layer();
     stage.add(layer);
-
-    stage.scale({ x: 0.4, y: 0.4 });
-
     stage.on("dragend", saveData);
 
     let imageCount = 0;
@@ -214,6 +227,15 @@ const PackageEditor = (props: {
       let textNodes = textTransformer.nodes().slice();
       setSelectedNodes([...imageNodes, ...textNodes]);
     });
+
+    fitStage();
+  }, [asset]);
+
+  useLayoutEffect(() => {
+    window.addEventListener("resize", fitStage);
+    return () => {
+      window.removeEventListener("resize", fitStage);
+    };
   }, [asset]);
 
   return (

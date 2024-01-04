@@ -3,7 +3,6 @@ import { v4 as uuid } from "uuid";
 
 import {
   PackagePreset,
-  PackageShape,
   PackageType,
   PackageShapeType,
   PackageAsset,
@@ -155,7 +154,7 @@ const boxAsset: PackageAsset = {
   id: uuid(),
   type: PackageType.Box,
   width: 1760,
-  height: 1578,
+  height: 2018,
   groups: [
     // Top side.
     {

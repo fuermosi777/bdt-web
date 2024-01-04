@@ -24,7 +24,7 @@ const Designer = () => {
   const display = useDesignerStore((s) => s.display);
   const imageData = useDesignerStore((s) => s.imageData);
   const setImageData = useDesignerStore((s) => s.setImageData);
-  const selectedNodes = useDesignerStore((s) => s.selectedNodes);
+
   const asset = useDesignerStore((s) => s.asset);
   const leftDrawerOpen = useDesignerStore((s) => s.leftDrawerOpen);
   const setLeftDrawer = useDesignerStore((s) => s.setLeftDrawer);
